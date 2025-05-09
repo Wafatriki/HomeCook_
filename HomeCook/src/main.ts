@@ -6,8 +6,6 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { firebaseConfig } from './environments/environment';
 import { routes } from "./app/app.routes";
 import { provideRouter } from "@angular/router";
-import {importProvidersFrom} from "@angular/core";
-import {IonicModule} from "@ionic/angular";
 
 bootstrapApplication(AppComponent, {
   providers: [
