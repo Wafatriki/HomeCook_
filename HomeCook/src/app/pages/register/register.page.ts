@@ -1,23 +1,25 @@
 import { Component } from '@angular/core';
-import { getAuth, createUserWithEmailAndPassword } from '@angular/fire/auth';
-import { FirebaseError } from 'firebase/app';
+import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../Services/authentication.service';
+import { Router } from '@angular/router';
 import {
-  IonButton,
-  IonContent,
   IonHeader,
-  IonInput,
+  IonToolbar,
+  IonTitle,
+  IonContent,
   IonItem,
   IonLabel,
-  IonTitle,
-  IonToolbar
-} from "@ionic/angular/standalone";
-import { FormsModule } from "@angular/forms";
+  IonInput,
+  IonNote,
+  IonButton
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-register',
-  standalone: true,
   templateUrl: './register.page.html',
+  styleUrls: ['./register.page.scss'],
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -28,32 +30,52 @@ import { FormsModule } from "@angular/forms";
     IonItem,
     IonLabel,
     IonInput,
+    IonNote,
     IonButton
-  ],
-  styleUrls: ['./register.page.scss']
+  ]
 })
 export class RegisterPage {
-  email: string = '';
-  password: string = '';
-  confirmPassword: string = '';
-  errorMessage: string = '';
-  passwordMismatch: boolean = false;
+  constructor(private authService: AuthService, private router: Router) {}
 
-  async onSubmit(form: any) {
-    if (this.password !== this.confirmPassword) {
-      this.passwordMismatch = true;
+  passwordMismatch: boolean = false;
+  errorMessage: string | null = null;
+
+  onSubmit(form: NgForm): void {
+    const { username, password, nuevaPassword } = form.value;
+
+    // Validar si las contraseñas coinciden
+    this.passwordMismatch = password !== nuevaPassword;
+
+    if (form.invalid || this.passwordMismatch) {
       return;
     }
 
-    this.passwordMismatch = false;
-    const auth = getAuth();
+    // Lógica de registro
+    this.authService.register(username, password)
+      .then(() => {
+        this.router.navigate(['']);
+      })
+      .catch((error) => {
+        this.errorMessage = error;
+      });
+  }
 
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.password);
-      console.log('Usuario registrado:', userCredential.user);
-    } catch (error: any) {
-      this.errorMessage = error.message || 'Error desconocido';
-      console.error('Error en el registro:', error);
-    }
+  // Métodos para cargar templates (opcional)
+  loadTemplate(fileName: string, id: string, callback?: () => void): void {
+    fetch(fileName)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Error al cargar el archivo: ${res.statusText}`);
+        return res.text();
+      })
+      .then((text) => {
+        const element = document.getElementById(id);
+        if (element) element.innerHTML = text;
+        if (callback) callback();
+      })
+      .catch((error) => console.error('Error al cargar el template:', error));
+  }
+
+  loadTemplateFromSource(source: string, id: string): void {
+    this.loadTemplate(source, id);
   }
 }

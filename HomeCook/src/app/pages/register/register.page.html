@@ -1,9 +1,73 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Registro</ion-title>
-  </ion-toolbar>
+
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h1 style="color: red;">¡La página de registro se ha cargado correctamente!</h1>
+  <div class="container">
+    <form #registrationForm="ngForm"
+          (ngSubmit)="onSubmit(registrationForm)"
+          novalidate>
+      <h1>Sign-in</h1>
+
+      <!-- Mensaje de error -->
+      <ion-item lines="none" *ngIf="errorMessage">
+        <ion-label class="error-message">{{ errorMessage }}</ion-label>
+      </ion-item>
+
+      <!-- Campo Email -->
+      <ion-item>
+        <ion-label position="stacked" class="label">Usuario:</ion-label>
+        <ion-input
+          type="email"
+          name="username"
+          placeholder="tucorreo@ejemplo.com"
+          required
+          email
+          ngModel
+          #username="ngModel"
+          [class.invalid]="username.invalid && username.touched"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="username.invalid && username.touched" color="danger">
+        Introduzca una dirección de correo electrónico válida (ejemplo&#64;mail.com).
+      </ion-note>
+
+      <!-- Campo Contraseña -->
+      <ion-item>
+        <ion-label position="stacked" class="label">Contraseña:</ion-label>
+        <ion-input
+          type="password"
+          name="password"
+          required
+          ngModel
+          #password="ngModel"
+          [class.invalid]="password.invalid && password.touched"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="password.invalid && password.touched" color="danger">
+        Mínimo 8 caracteres, al menos un número, un carácter especial y una mayúscula.
+      </ion-note>
+
+      <!-- Confirmar Contraseña -->
+      <ion-item>
+        <ion-label position="stacked" class="label">Repetir contraseña:</ion-label>
+        <ion-input
+          type="password"
+          name="nuevaPassword"
+          required
+          ngModel
+          #nuevaPassword="ngModel"
+          [class.invalid]="(nuevaPassword.invalid && nuevaPassword.touched) || passwordMismatch"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="passwordMismatch" color="danger">
+        Las contraseñas no coinciden.
+      </ion-note>
+
+      <ion-button
+        type="submit"
+        expand="block"
+        class="login-button"
+        [disabled]="registrationForm.invalid">
+        Sign-in
+      </ion-button>
+    </form>
+  </div>
 </ion-content>

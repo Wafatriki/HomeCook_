@@ -1,3 +1,75 @@
-ion-content {
-  --background: white !important;
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500&display=swap');
+
+.container {
+  background: #d3d3d3;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  height: auto;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 400px;
+  font-family: 'Raleway', sans-serif;
+
+  h1 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+}
+
+.label {
+  font-weight: bold;
+  font-family: 'Raleway', sans-serif;
+  color: #000;
+}
+
+ion-input {
+  background: gray;
+  border-radius: 20px;
+  --padding-start: 10px !important;
+  --padding-end: 10px !important;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.login-button {
+  --background: #e08b89;
+  --color: black;
+  --border-radius: 20px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  font-family: 'Raleway', sans-serif;
+  width: 100px;
+  margin: 0 auto;
+
+  &:hover {
+    --background: #d46b6a;
+  }
+}
+
+.error-message {
+  color: var(--ion-color-danger);
+  font-size: 14px;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 90%;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    max-width: 95%;
+    padding: 15px;
+  }
 }
