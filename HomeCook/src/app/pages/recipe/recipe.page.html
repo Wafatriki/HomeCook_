@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ recipeData?.name || 'Receta' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item *ngIf="recipeData">
+    <ion-img [src]="recipeData.imageUrl" alt="Imagen de la receta"></ion-img>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <h2>Descripción</h2>
+      <p>{{ recipeData?.description }}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-button expand="block" (click)="toggleFavorite()">
+    {{ isFavorite ? 'Eliminar de favoritos' : 'Añadir a favoritos' }}
+  </ion-button>
+</ion-content>
