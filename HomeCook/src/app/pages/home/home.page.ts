@@ -14,13 +14,14 @@ import {
 } from "@ionic/angular/standalone";
 import {FormsModule} from "@angular/forms";
 import {HeaderComponent} from "../../header/header.component";
+import {ItemComponent} from "../../item/item.component";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonItem, IonImg, IonLabel, HeaderComponent]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonItem, IonImg, IonLabel, HeaderComponent, ItemComponent]
 })
 
 export class HomePage implements OnInit {
@@ -34,11 +35,13 @@ export class HomePage implements OnInit {
   }
 
   loadRecipes() {
-    const recipesRef = collection(this.firestore, 'recipes');
+    const recipesRef = collection(this.firestore, 'Recipes'); // 👈 Asegúrate de que el nombre coincide EXACTAMENTE con Firestore
     collectionData(recipesRef, { idField: 'id' }).subscribe(data => {
       this.recipes = data;
+      console.log('Recetas cargadas:', this.recipes);
     });
   }
+
 
   goToRecipe(recipeId: string) {
     this.router.navigate(['/recipe', recipeId]);

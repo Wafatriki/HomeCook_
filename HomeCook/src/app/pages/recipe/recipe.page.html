@@ -1,17 +1,40 @@
 <app-header></app-header>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ recipeData?.name || 'Receta' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content class="ion-padding">
-  <ion-item *ngIf="recipeData">
-    <ion-img [src]="recipeData.imageUrl" alt="Imagen de la receta"></ion-img>
-  </ion-item>
+  <div class="recipe-container" *ngIf="recipeData">
+    <div class="image-container">
+      <figure>
+        <img [src]="recipeData.Image || 'assets/Images/default_image.png'" alt="Imagen de receta">
+      </figure>
+      <div class="rating">
+        <span *ngFor="let star of [1,2,3,4,5]" class="star">⭐</span>
+      </div>
+      <div class="actions">
 
-  <ion-item>
-    <ion-label>
-      <h2>Descripción</h2>
-      <p>{{ recipeData?.description }}</p>
-    </ion-label>
-  </ion-item>
+      </div>
+    </div>
+    <h2>Ingredientes</h2>
+    <ul>
+      <li *ngFor="let ingredient of recipeData.Ingredients">
+        {{ ingredient.Ammount }} de {{ ingredient.Ingredient }}
+      </li>
+    </ul>
 
-  <ion-button expand="block" (click)="toggleFavorite()">
-    {{ isFavorite ? 'Eliminar de favoritos' : 'Añadir a favoritos' }}
-  </ion-button>
+    <h2>Pasos de la receta</h2>
+    <ul>
+
+        <app-steps-of-recipes [steps]="recipeData.Steps"></app-steps-of-recipes>
+
+    </ul>
+
+
+
+
+
+  </div>
 </ion-content>

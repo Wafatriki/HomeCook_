@@ -1,17 +1,17 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { Firestore, doc, getDoc } from '@angular/fire/firestore';
+import { CommonModule } from '@angular/common';
 import {
   IonButton,
   IonContent,
   IonHeader,
   IonImg,
-  IonItem,
   IonLabel,
   IonTitle,
   IonToolbar
 } from "@ionic/angular/standalone";
+import {StepsOfRecipesComponent} from "../../steps-of-recipes/steps-of-recipes.component";
 import {HeaderComponent} from "../../header/header.component";
 
 @Component({
@@ -26,9 +26,9 @@ import {HeaderComponent} from "../../header/header.component";
     IonToolbar,
     IonHeader,
     IonTitle,
-    IonItem,
     IonImg,
     IonButton,
+    StepsOfRecipesComponent,
     HeaderComponent
   ]
 })
@@ -38,7 +38,6 @@ export class RecipePage {
 
   recipeId: string | null = null;
   recipeData: any = null;
-  isFavorite: boolean = false;
 
   async ngOnInit() {
     this.recipeId = this.route.snapshot.paramMap.get('id');
@@ -48,18 +47,20 @@ export class RecipePage {
   }
 
   async loadRecipe() {
-    const recipeRef = doc(this.firestore, `recipes/${this.recipeId}`);
-    const recipeSnap = await getDoc(recipeRef);
+    this.recipeId = this.route.snapshot.paramMap.get('id');
+    console.log('ID de la receta:', this.recipeId);
 
-    if (recipeSnap.exists()) {
-      this.recipeData = recipeSnap.data();
-    } else {
-      console.error('Receta no encontrada');
+    if (this.recipeId) {
+      const recipeRef = doc(this.firestore, `Recipes/${this.recipeId}`);
+      const recipeSnap = await getDoc(recipeRef);
+
+      if (recipeSnap.exists()) {
+        this.recipeData = recipeSnap.data();
+        console.log('Datos de la receta:', this.recipeData);
+      } else {
+        console.error('Receta no encontrada');
+      }
     }
   }
 
-  toggleFavorite() {
-    this.isFavorite = !this.isFavorite;
-    console.log(this.isFavorite ? 'Añadido a favoritos' : 'Eliminado de favoritos');
-  }
 }

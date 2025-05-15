@@ -1,4 +1,5 @@
 <app-header></app-header>
+
 <ion-header>
   <ion-toolbar>
     <ion-title>Lista de Recetas</ion-title>
@@ -6,13 +7,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div id="ListOfRecipes">
-    <ion-item *ngFor="let recipe of recipes" (click)="goToRecipe(recipe.id)">
-      <ion-img [src]="recipe.imageUrl || 'assets/default-image.png'" alt="Imagen de la receta"></ion-img>
-      <ion-label>
-        <h2>{{ recipe.name }}</h2>
-        <p>{{ recipe.description }}</p>
-      </ion-label>
-    </ion-item>
+  <div id="ListOfRecipes" class="recipe-container">
+    <app-item *ngFor="let recipe of recipes" [recipe]="recipe"></app-item>
   </div>
 </ion-content>
