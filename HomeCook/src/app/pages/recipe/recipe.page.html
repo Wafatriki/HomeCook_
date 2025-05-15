@@ -1,9 +1,4 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>{{ recipeData?.name || 'Receta' }}</ion-title>
-  </ion-toolbar>
-</ion-header>
-
+<app-header></app-header>
 <ion-content class="ion-padding">
   <ion-item *ngIf="recipeData">
     <ion-img [src]="recipeData.imageUrl" alt="Imagen de la receta"></ion-img>

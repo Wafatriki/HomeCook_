@@ -12,6 +12,7 @@ import {
   IonTitle,
   IonToolbar
 } from "@ionic/angular/standalone";
+import {HeaderComponent} from "../../header/header.component";
 
 @Component({
   selector: 'app-recipe',
@@ -27,7 +28,8 @@ import {
     IonTitle,
     IonItem,
     IonImg,
-    IonButton
+    IonButton,
+    HeaderComponent
   ]
 })
 export class RecipePage {

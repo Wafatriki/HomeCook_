@@ -13,13 +13,14 @@ import {
   IonToolbar
 } from "@ionic/angular/standalone";
 import {FormsModule} from "@angular/forms";
+import {HeaderComponent} from "../../header/header.component";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonItem, IonImg, IonLabel]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonItem, IonImg, IonLabel, HeaderComponent]
 })
 
 export class HomePage implements OnInit {

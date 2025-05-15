@@ -14,6 +14,7 @@ import {
   IonNote,
   IonButton
 } from '@ionic/angular/standalone';
+import {HeaderComponent} from "../../header/header.component";
 
 @Component({
   selector: 'app-register',
@@ -31,7 +32,8 @@ import {
     IonLabel,
     IonInput,
     IonNote,
-    IonButton
+    IonButton,
+    HeaderComponent
   ]
 })
 export class RegisterPage {
