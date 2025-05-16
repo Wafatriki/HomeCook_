@@ -1,13 +1,25 @@
-<ion-header [translucent]="true">
+<app-header></app-header>
+
+<ion-header>
   <ion-toolbar>
-    <ion-title>favoritos</ion-title>
+    <ion-title>Lista de Recetas</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">favoritos</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <div id="ListOfRecipes" class="recipe-container">
+    <div
+      *ngFor="let recipe of recipes"
+      class="recipe-card"
+      [class.favorite]="recipe.isFavorite"
+      (click)="toggleFavorite(recipe)"
+    >
+      <app-item [recipe]="recipe"></app-item>
+
+      <!-- Etichetta "Preferita" o icona -->
+      <div class="favorite-badge" *ngIf="recipe.isFavorite">
+        ❤️ Preferita
+      </div>
+    </div>
+  </div>
 </ion-content>

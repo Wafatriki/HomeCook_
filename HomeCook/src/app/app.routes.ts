@@ -3,6 +3,7 @@ import { RegisterPage } from './pages/register/register.page';
 import { RecipePage } from './pages/recipe/recipe.page';
 import {HomePage} from "./pages/home/home.page";
 import {HeaderComponent} from "./header/header.component";
+import {FavoritosPage} from './pages/favoritos/favoritos.page';
 
 
 export const routes: Routes = [
@@ -11,10 +12,5 @@ export const routes: Routes = [
   { path: 'home', component: HomePage },
   { path: 'header', component: HeaderComponent },
   { path: 'recipe/:id', component: RecipePage },
-  {
-    path: 'favoritos',
-    loadComponent: () => import('./pages/favoritos/favoritos.page').then(m => m.FavoritosPage)
-  },
-
-
+  { path: 'favoritos', component: FavoritosPage }
 ];

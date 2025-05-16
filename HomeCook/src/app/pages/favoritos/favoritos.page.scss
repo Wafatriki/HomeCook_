@@ -1,0 +1,22 @@
+#ListOfRecipes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.recipe-card.favorite {
+  border: 2px solid #ff4081;
+  background-color: #fff0f5;
+}
+
+.favorite-badge {
+  position: relative;
+  top: 8px;
+  right: 8px;
+  background-color: #ff4081;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+}
