@@ -45,4 +45,9 @@ export class FirestoreService {
       docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } : null
     );
   }
+
+  getItems() {
+    const coll = collection(this.firestore, 'Favoritos');
+    return collectionData(coll, { idField: 'id' });
+  }
 }
