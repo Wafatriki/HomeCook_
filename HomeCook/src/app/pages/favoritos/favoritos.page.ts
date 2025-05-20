@@ -53,13 +53,10 @@ export class FavoritosPage implements OnInit {
 
   toggleFavorite(recipe: any) {
     if (recipe.isFavorite) {
-      // Rimuovi dai preferiti
       this.favoriteIds = this.favoriteIds.filter(id => id !== recipe.id);
     } else {
-      // Aggiungi ai preferiti
       this.favoriteIds.push(recipe.id);
     }
-    // Aggiorna la lista per riflettere i cambiamenti
     this.recipes = this.recipes.map(r => ({
       ...r,
       isFavorite: this.favoriteIds.includes(r.id)
