@@ -9,10 +9,12 @@ import {
   IonImg,
   IonLabel,
   IonTitle,
-  IonToolbar
+  IonToolbar,
+  IonIcon
 } from "@ionic/angular/standalone";
 import {StepsOfRecipesComponent} from "../../steps-of-recipes/steps-of-recipes.component";
 import {HeaderComponent} from "../../header/header.component";
+import {FavoritesService} from "../../Services/favoritos-service.service";
 
 @Component({
   selector: 'app-recipe',
@@ -28,6 +30,7 @@ import {HeaderComponent} from "../../header/header.component";
     IonTitle,
     IonImg,
     IonButton,
+    IonIcon,
     StepsOfRecipesComponent,
     HeaderComponent
   ]
@@ -35,6 +38,8 @@ import {HeaderComponent} from "../../header/header.component";
 export class RecipePage {
   private route = inject(ActivatedRoute);
   private firestore = inject(Firestore);
+  private favoritesService = inject(FavoritesService);
+  isFavorite = false;
 
   recipeId: string | null = null;
   recipeData: any = null;
@@ -44,6 +49,17 @@ export class RecipePage {
     if (this.recipeId) {
       await this.loadRecipe();
     }
+    this.recipeId = this.route.snapshot.paramMap.get('id');
+    if (this.recipeId) {
+      await this.loadRecipe();
+      this.isFavorite = this.favoritesService.isFavorite(this.recipeId);
+    }
+  }
+
+  toggleFavorite() {
+      if (this.recipeId) {
+        this.isFavorite = this.favoritesService.toggleFavorite(this.recipeId);
+      }
   }
 
   async loadRecipe() {
