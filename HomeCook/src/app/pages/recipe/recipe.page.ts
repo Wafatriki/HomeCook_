@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Firestore, doc, getDoc } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import {
   IonButton,
   IonContent,
@@ -35,7 +36,9 @@ import {FavoritesService} from "../../Services/favoritos-service.service";
     HeaderComponent
   ]
 })
+
 export class RecipePage {
+  private router = inject(Router);
   private route = inject(ActivatedRoute);
   private firestore = inject(Firestore);
   private favoritesService = inject(FavoritesService);
@@ -57,7 +60,11 @@ export class RecipePage {
   }
 
   toggleFavorite() {
-    this.isFavorite = !this.isFavorite;
+    if (this.recipeId) {
+      this.favoritesService.toggleFavorite(this.recipeId);
+      this.isFavorite = this.favoritesService.isFavorite(this.recipeId);
+      this.router.navigate(['/favorites']); // 🔁 Naviga ai preferiti
+    }
   }
 
   async loadRecipe() {

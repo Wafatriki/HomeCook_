@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ItemComponent {
   @Input() recipe: any;
+  isAlwaysFavorite: boolean = false;
 
   constructor(private router: Router) {}
 

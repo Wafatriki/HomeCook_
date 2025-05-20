@@ -1,4 +1,5 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy,OnInit} from '@angular/core';
+import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import {collection, collectionData, Firestore} from "@angular/fire/firestore";
 import {Router} from "@angular/router";
@@ -15,6 +16,8 @@ import {
 import {FormsModule} from "@angular/forms";
 import {HeaderComponent} from "../../header/header.component";
 import {ItemComponent} from "../../item/item.component";
+import { FavoritesService } from "../../Services/favoritos-service.service";
+
 
 @Component({
   selector: 'app-favoritos',
@@ -23,43 +26,48 @@ import {ItemComponent} from "../../item/item.component";
   standalone: true,
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonItem, IonImg, IonLabel, HeaderComponent, ItemComponent]
 })
-export class FavoritosPage implements OnInit {
+export class FavoritosPage implements OnInit, OnDestroy {
   private firestore = inject(Firestore);
   private router = inject(Router);
+  private favoritesService = inject(FavoritesService);
+
 
   recipes: any[] = [];
+  private subscription!: Subscription;
   favoriteIds: string[] = [];
 
   ngOnInit(): void {
-    this.loadRecipes();
-  }
-
-  loadRecipes() {
-    const recipesRef = collection(this.firestore, 'Recipes');
-    collectionData(recipesRef, { idField: 'id' }).subscribe(data => {
-      this.recipes = data.map(recipe => ({
-        ...recipe,
-        isFavorite: this.favoriteIds.includes(recipe.id)
-      }));
-      console.log('Recetas cargadas con favoritos:', this.recipes);
+    this.subscription = this.favoritesService.favorites$.subscribe(() => {
+      this.loadFavoriteRecipes();
     });
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
+  loadFavoriteRecipes() {
+    const favoriteIds = this.favoritesService.getFavorites();
+
+    if (favoriteIds.length === 0) {
+      this.recipes = [];
+      return;
+    }
+
+    const recipesRef = collection(this.firestore, 'Recipes');
+    collectionData(recipesRef, { idField: 'id' }).subscribe(data => {
+      this.recipes = data.filter(recipe => favoriteIds.includes(recipe.id));
+      console.log('Ricette preferite:', this.recipes);
+    });
+  }
 
   goToRecipe(recipeId: string) {
     this.router.navigate(['/recipe', recipeId]);
   }
 
   toggleFavorite(recipe: any) {
-    if (recipe.isFavorite) {
-      this.favoriteIds = this.favoriteIds.filter(id => id !== recipe.id);
-    } else {
-      this.favoriteIds.push(recipe.id);
-    }
-    this.recipes = this.recipes.map(r => ({
-      ...r,
-      isFavorite: this.favoriteIds.includes(r.id)
-    }));
+    this.favoritesService.toggleFavorite(recipe.id);
+    this.recipes = this.recipes.filter(r => this.favoritesService.isFavorite(r.id));
   }
+
 }

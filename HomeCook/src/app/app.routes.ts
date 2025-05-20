@@ -12,5 +12,8 @@ export const routes: Routes = [
   { path: 'home', component: HomePage },
   { path: 'header', component: HeaderComponent },
   { path: 'recipe/:id', component: RecipePage },
-  { path: 'favoritos', component: FavoritosPage }
+  {
+    path: 'favorites',
+    loadComponent: () => import('./pages/favoritos/favoritos.page').then(m => m.FavoritosPage)
+  }
 ];
