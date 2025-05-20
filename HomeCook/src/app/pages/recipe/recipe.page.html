@@ -8,20 +8,14 @@
 <ion-content class="ion-padding">
   <div class="recipe-container" *ngIf="recipeData">
     <div class="image-container">
-      <div class="actions">
-        <ion-button fill="clear" (click)="toggleFavorite()">
-          <ion-icon
-            slot="icon-only"
-            [name]="isFavorite ? 'heart' : 'heart-outline'"
-            color="danger"
-          ></ion-icon>
-        </ion-button>
-      </div>
       <figure>
         <img [src]="recipeData.Image || 'assets/Images/default_image.png'" alt="Imagen de receta">
       </figure>
       <div class="rating">
         <span *ngFor="let star of [1,2,3,4,5]" class="star">⭐</span>
+        <span class="heart" (click)="toggleFavorite()">
+    {{ isFavorite ? '❤️' : '🤍' }}
+  </span>
       </div>
       <div class="actions">
 

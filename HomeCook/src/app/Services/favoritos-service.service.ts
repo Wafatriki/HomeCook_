@@ -21,11 +21,11 @@ export class FavoritesService {
     if (index > -1) {
       favorites.splice(index, 1);
       localStorage.setItem(this.key, JSON.stringify(favorites));
-      return false; // ora NON è più tra i preferiti
+      return false;
     } else {
       favorites.push(id);
       localStorage.setItem(this.key, JSON.stringify(favorites));
-      return true; // ora è preferito
+      return true;
     }
   }
 }

@@ -57,9 +57,7 @@ export class RecipePage {
   }
 
   toggleFavorite() {
-      if (this.recipeId) {
-        this.isFavorite = this.favoritesService.toggleFavorite(this.recipeId);
-      }
+    this.isFavorite = !this.isFavorite;
   }
 
   async loadRecipe() {
