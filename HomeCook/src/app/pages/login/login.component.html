@@ -1,0 +1,56 @@
+<app-header></app-header>
+
+<ion-content class="ion-padding">
+  <div class="container">
+    <form #LoginForm="ngForm"
+          (ngSubmit)="onSubmit(LoginForm)"
+          novalidate>
+      <h1>Login</h1>
+
+      <!-- Mensaje de error -->
+      <ion-item lines="none" *ngIf="errorMessage">
+        <ion-label class="error-message">{{ errorMessage }}</ion-label>
+      </ion-item>
+
+      <!-- Campo Email -->
+      <ion-item>
+        <ion-label position="stacked" class="label">Usuario:</ion-label>
+        <ion-input
+          type="email"
+          name="username"
+          placeholder="tucorreo@ejemplo.com"
+          required
+          email
+          ngModel
+          #username="ngModel"
+          [class.invalid]="username.invalid && username.touched"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="username.invalid && username.touched" color="danger">
+        Introduzca una dirección de correo electrónico válida (ejemplo&#64;mail.com).
+      </ion-note>
+
+      <!-- Campo Contraseña -->
+      <ion-item>
+        <ion-label position="stacked" class="label">Contraseña:</ion-label>
+        <ion-input
+          type="password"
+          name="password"
+          required
+          ngModel
+          #password="ngModel"
+          [class.invalid]="password.invalid && password.touched"></ion-input>
+      </ion-item>
+      <ion-note *ngIf="password.invalid && password.touched" color="danger">
+        Mínimo 8 caracteres, al menos un número, un carácter especial y una mayúscula.
+      </ion-note>
+
+      <ion-button
+        type="submit"
+        expand="block"
+        class="login-button"
+        [disabled]="LoginForm.invalid">
+        Login
+      </ion-button>
+    </form>
+  </div>
+</ion-content>
