@@ -18,8 +18,8 @@ import {HeaderComponent} from "../../header/header.component";
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -36,7 +36,7 @@ import {HeaderComponent} from "../../header/header.component";
     HeaderComponent
   ]
 })
-export class LoginPage {
+export class LoginComponent {
   errorMessage: string | null = null;
 
   constructor(
@@ -51,10 +51,10 @@ export class LoginPage {
 
     this.authService.login(username, password)
       .then(() => {
-        this.router.navigate(['/']);
+        this.router.navigate(['']);
       })
       .catch((error) => {
-        this.errorMessage = 'Credenziali non valide. Riprova.';
+        this.errorMessage = 'Error, reintenta.';
         console.error(error);
       });
   }

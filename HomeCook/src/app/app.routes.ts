@@ -3,7 +3,6 @@ import { RegisterPage } from './pages/register/register.page';
 import { RecipePage } from './pages/recipe/recipe.page';
 import {HomePage} from "./pages/home/home.page";
 import {HeaderComponent} from "./header/header.component";
-import {FavoritosPage} from './pages/favoritos/favoritos.page';
 
 
 export const routes: Routes = [
@@ -15,5 +14,9 @@ export const routes: Routes = [
   {
     path: 'favorites',
     loadComponent: () => import('./pages/favoritos/favoritos.page').then(m => m.FavoritosPage)
+  },
+  {
+    path: 'login',
+    loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent)
   }
 ];

@@ -2,8 +2,8 @@
 
 <ion-content class="ion-padding">
   <div class="container">
-    <form #LoginForm="ngForm"
-          (ngSubmit)="onSubmit(LoginForm)"
+    <form #loginForm="ngForm"
+          (ngSubmit)="onSubmit(loginForm)"
           novalidate>
       <h1>Login</h1>
 
@@ -48,7 +48,7 @@
         type="submit"
         expand="block"
         class="login-button"
-        [disabled]="LoginForm.invalid">
+        [disabled]="loginForm.invalid">
         Login
       </ion-button>
     </form>
